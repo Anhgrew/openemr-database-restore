@@ -1,0 +1,20 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "open-emr-charts.serviceAccountName" . }}
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "open-emr-charts.serviceAccountName" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "open-emr-charts.serviceAccountName" . }}
+roleRef:
+  kind: Role
+  name: {{ include "open-emr-charts.serviceAccountName" . }}
+  apiGroup: rbac.authorization.k8s.io
